@@ -52,21 +52,7 @@
               <span class="tooltip"> Summary </span>
             </nuxt-link>
           </li>
-          <li>
-            <nuxt-link
-              to="/request-page"
-              :class="{
-                'nav-link': true,
-                // active: role.address === selectedRoleAddress,
-              }"
-            >
-              <div class="role-wrapper">
-                <i class="bi bi-bag icon"></i>
-                <span class="iconName">Requests</span>
-              </div>
-              <span class="tooltip"> Requests </span>
-            </nuxt-link>
-          </li>
+       
           <li>
             <nuxt-link
               to="/master-price"
@@ -112,21 +98,7 @@
               <span class="tooltip"> Transfers </span>
             </nuxt-link>
           </li>
-          <li>
-            <nuxt-link
-              to="/expenses"
-              :class="{
-                'nav-link': true,
-                // active: role.address === selectedRoleAddress,
-              }"
-            >
-              <div class="role-wrapper">
-                <i class="bi bi-pie-chart icon"></i>
-                <span class="iconName">Expenses</span>
-              </div>
-              <span class="tooltip"> Expenses </span>
-            </nuxt-link>
-          </li>
+          
           <li>
             <nuxt-link
               to="/products"
