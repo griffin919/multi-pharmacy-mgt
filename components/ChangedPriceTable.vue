@@ -1,7 +1,7 @@
 <template>
-  <div style="width: 100%" class="d-flex flex-column align-items-between">
+  <div style="width: 100%" class="w-90 changedPricesTable d-flex">
     <span>
-      <label class="mb-2 pageTitleText"> Price Change ID: </label>
+      <label> Price Change ID: </label>
     </span>
     <span>
       <table class="tabCon table mt-2">
@@ -46,3 +46,53 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.table-container {
+  margin: 20px;
+}
+
+/* Style the table header */
+.table thead th {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+/* Style the table rows */
+.table tbody tr {
+  border: 1px solid #ddd;
+}
+
+/* Alternate row colors for better readability */
+.table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Style the cells */
+.table td {
+  padding: 10px;
+}
+
+/* Style the "Change" button */
+.table button {
+  font-size: 0.8rem;
+  color: #fff;
+  background-color: hsl(264, 39%, 51%);
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.changedPricesTable {
+  background-color: #fff;
+  flex-direction: column;
+  padding: 1rem;
+  height: 50%;
+  overflow: hidden;
+  overflow-y: auto;
+  border-radius: 10px;
+}
+</style>

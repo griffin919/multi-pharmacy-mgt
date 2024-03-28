@@ -1,213 +1,53 @@
 <template>
-  <div class="ml-4 mr-4 mt-2">
+  <div class="ml-4 mr-4 parent">
+    <!-- Header -->
     <div class="mt-3 mb-2 row d-flex align-items-center">
       <div class="col-3 pageTitleText w-50">
-        <h3>Manage product prices</h3>
+        <p>Manage Branch Pricing</p>
       </div>
-      <div class="col-5">
-        <div class="input-group">
-          <i class="input-group-text bi bi-search"></i>
-          <input
-            autofocus="autofocus"
-            @keyup.enter="sendProductSearch()"
-            @input="sendProductSearch($event)"
-            v-model="searchTerm"
-            type="text"
-            class="form-control input-sm"
-            id="inputsm"
-            placeholder="Search for product here"
-            aria-label="Username"
-            aria-describedby="basic-addon1"
-            style="font-size: small"
-          />
-        </div>
+      <div class="col-5 tabBar"  >
+        <ul>
+          <li @click="tab = 1" :class="{'active': tab === 1}" style="border-radius: 3px;">Create</li>
+          <li @click="tab = 2" :class="{'active': tab === 2}" style="border-radius: 3px;">Outgoing</li>
+          <li @click="tab = 3" :class="{'active': tab === 3}" style="border-radius: 3px;">History</li>
+        </ul>
       </div>
 
       <div class="col-4 d-flex align-items-center justify-content-end">
         <div>&nbsp; &nbsp; &nbsp;</div>
-        <div class="w-60">
-          <button
-            type="button"
-            :class="BSClassCombos.btnClass"
-            @click="showChangedPriceTable = !showChangedPriceTable"
-          >
-            {{
-              showChangedPriceTable
-                ? "Completed Price Changes"
-                : "Changed Price Table"
-            }}
-          </button>
+        <div class="w-60 d-flex" style="padding-right: 150px;">
+          <selectBranches  :clickHandler="logSomefin1" label="Select Branches"/>
         </div>
       </div>
     </div>
 
-    <!-- product search for price change -->
-    <div class="gridContainer mt-3">
-      <div class="priceChangeTable d-flex flex-column gridCol1">
-        <div>
-          <div>
-            <div style="overflow-y: auto">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col" class="text-capitalize col-8">
-                      Product name
-                    </th>
-                    <th scope="col" class="text-capitalize col-1">Unit</th>
-                    <th scope="col" class="text-capitalize col-1">
-                      Selling Price
-                    </th>
-                    <th scope="col" class="text-capitalize col-1"></th>
-                    <!-- <th scope="col" class="text-capitalize col-2"></th> -->
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    role="button"
-                    class="align-middle"
-                    v-for="product in this.productsInfor"
-                    :key="product.id"
-                    @click="
-                      showOrCloseModal('changePriceModal', 'show'),
-                        pickSelectedProduct(product)
-                    "
-                  >
-                    <td class="text-capitalize py-2">
-                      {{ product.productDescription }}
-                    </td>
-                    <td>{{ product.unit }}</td>
-                    <td>{{ formatMoney(product.sellingPrice) }}</td>
-                    <td>
-                      <button
-                        class="btn btn-sm"
-                        style="
-                          font-size: 0.7rem !important;
-                          color: blueviolet;
-                          background: none;
-                        "
-                        @click="
-                          showOrCloseModal('changePriceModal', 'show'),
-                            pickSelectedProduct(product)
-                        "
-                      >
-                        Change
-                      </button>
-                    </td>
-                    <!-- <td><button class="btn btn-sm btn-primary" @click="requestQty(product.id)">Request</button></td> -->
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
 
+
+    <!-- product search for price change -->
+    <div id="pageBody" style="" class="smooth-transition">
+      <transition name="fade">
+      <div v-if="tab === 1">
+        <createPriceChange />
+      </div>
+      <div v-else-if="tab === 2" class="smooth-transition">
+        <OutgoingPriceChange/>
+      </div>
+      <div v-else-if="tab === 3" class="smooth-transition">
+        <div><PriceChangeHistory/></div>
+      </div>
+    </transition>
+   
       <!--  Changed Price table -->
-      <div class="priceChangeTable gridCol2">
+      <!-- <div class="priceChangeTable gridCol2">
         <div v-if="showChangedPriceTable">
           <changedPriceTable />
         </div>
         <div v-else>
           <completedPriceChanges :tdValArr="sPriceChangeHistory" />
         </div>
-      </div>
+      </div> -->
     </div>
 
-    <!-- Change Price Modal -->
-    <div
-      class="modal fade changePrice-modal-lg"
-      tabindex="-1"
-      role="dialog"
-      id="changePriceModal"
-      aria-labelledby="myLargeModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content d-flex flex-columns">
-          <div class="m-3 editPriceContainer">
-            <div class="mb-2 d-flex justify-content-end">
-              <button
-                style="background: transparent !important"
-                class="btn btn-danger btn-sm btn-light"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              >
-                <!-- @click="showOrCloseModal('changePriceModal', 'hide')" -->
-                <i style="color: red" class="bi bi-x-lg"></i>
-              </button>
-            </div>
-            <div
-              class="editPriceCol editPriceCol1 d-flex justify-content-between ml-5 mr-5"
-            >
-              <span
-                >Product:&nbsp;&nbsp;<span class="pageTitleText">
-                  {{ this.clickedProduct.productDescription }}
-                </span></span
-              >
-              <span class="ml-8"
-                >Unit:&nbsp;&nbsp;
-                <span class="pageTitleText">{{
-                  this.clickedProduct.unit
-                }}</span></span
-              >
-              <span class="ml-5"
-                >Strength:&nbsp;&nbsp;
-                <span class="pageTitleText">{{
-                  this.clickedProduct.strength
-                }}</span></span
-              >
-            </div>
-            <div class="editPriceCol editPriceCol2">
-              <span>
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th class="col-5">Pharmacy</th>
-                      <th class="col-1">Cost Price</th>
-                      <th class="col-1">Selling Price</th>
-                      <th class="col-1">Mark up</th>
-                      <th class="col-1">New SP</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="">
-                      <td>Main Street Pharmacy</td>
-                      <td>12.00</td>
-                      <td>15.00</td>
-                      <td>20%</td>
-                      <td>
-                        <input
-                          class="BSClassCombos.inputClass"
-                          style="width: 5rem"
-                          placeholder="New Price"
-                        />
-                      </td>
-                    </tr>
-                    <tr class="">
-                      <td>Main Street Pharmacy</td>
-                      <td>12.00</td>
-                      <td>15.00</td>
-                      <td>20%</td>
-                      <td>
-                        <input
-                          class="BSClassCombos.inputClass"
-                          style="width: 5rem"
-                          placeholder="New Price"
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </span>
-            </div>
-            <div class="editPriceCol editPriceCol3 d-flex justify-content-end">
-              <button :class="BSClassCombos.btnClass">Add Price Change</button>
-            </div>
-            <div class="editPriceCol editPriceCol4"></div>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <div
       class="modal fade changePrice-modal-lg"
@@ -227,6 +67,54 @@
 </template>
 
 <style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.smooth-transition {
+    transition: all 0.3s ease-in-out;
+}
+
+#pageBody{
+  border: 1px solid rgba(60, 64, 67, 0.3); 
+  padding: 10px; 
+  border-radius: 10px; 
+  min-height: 80vh ;
+}
+.parent .tabBar {
+  font-size: 0.8rem;
+}
+
+.parent .tabBar ul  {
+  display: flex;
+  list-style-type: none;
+}
+
+.parent .tabBar ul li {
+  cursor: pointer;
+  padding: 8px 5px;
+  width: 100%;
+  text-align: center;
+  margin: 0px 1px;
+  border: 1px solid rgba(60, 64, 67, 0.3);
+}
+
+.parent .tabBar ul li:hover{
+  border-bottom:3px solid #8e44ad;
+}
+
+.active{
+  background-color:#8e44ad;
+  color:#fff;
+}
+.changePrice {
+  width: 4rem;
+  height: 1.8rem;
+}
 .editPriceCol1 {
   margin: 1rem 0;
 }
@@ -236,24 +124,19 @@ button {
 
 .priceChangeTable {
   background-color: #fff;
-  padding: 1rem;
+  padding: 0.5rem;
   height: 80vh;
   overflow-y: auto;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   border-radius: 10px;
 }
-.priceChangeTable table td {
-  font-size: small;
-  padding: 0.4rem 0.2rem;
-  vertical-align: middle;
-}
 
 .priceChangeTable label {
   font-weight: 700;
   text-align: center;
 }
-
+/* 
 .gridContainer {
   display: grid;
   column-gap: 10px;
@@ -263,93 +146,134 @@ button {
 }
 
 .gridCol1 {
-  /* grid-row: span 1; */
-  /* border: 2px hsl(264, 39%, 51%) solid; */
+
   overflow-y: auto;
   overflow-x: hidden;
   grid-column: span 1;
 }
 .gridCol2 {
   grid-column: span 2;
-  /* grid-row: span 2; */
-  /* border: 2px hsl(264, 39%, 51%) solid; */
   overflow-y: auto;
   overflow-x: hidden;
-  /* height: 100%; */
-}
+
+} */
 
 thead {
   position: sticky; /* make the table heads sticky */
   top: 0px; /* table head will be placed from the top of the table and sticks to it */
 }
+
+.table-container {
+  margin: 20px;
+}
+
+/* Style the table header */
+.table thead th {
+  background-color: hsl(264, 39%, 51%);
+  color: #fff;
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+/* Style the table rows */
+.table tbody tr {
+  border: 1px solid #ddd;
+}
+
+/* Alternate row colors for better readability */
+.table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Style the cells */
+.table td {
+  padding: 10px;
+}
+
+/* Style the "Change" button */
+.table button {
+  font-size: 0.8rem;
+  color: #fff;
+  background-color: #8e44ad;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
 </style>
 
 <script>
 import { BSClassCombos } from "../assets/BSclasses";
-import CompletedPriceChanges from "../components/CompletedPriceChanges.vue";
 import { sPriceChangeHistory } from "../store/sampledb";
+import createPriceChange from "../components/price-change/createPriceChange.vue";
+import selectBranches from '../components/elements/selectBranches.vue'
+import PriceChangeHistory from "../components/price-change/priceChangeHistory.vue";
+import OutgoingPriceChange from "../components/price-change/outgoingPriceChange.vue";
 
 export default {
-  mounted() {
-    console.log("sPriceChangeHistory", sPriceChangeHistory);
-  },
-  data() {
-    return {
-      BSClassCombos: BSClassCombos,
-      searchTerm: "",
-      showChangedPriceTable: false,
-      enableStatus: "disabled",
-      formData: {
-        newProductName: "",
-      },
-      showChangePriceModal: false,
-      searchStart: false,
-      clickedProduct: {},
-      changedPricesObj: {},
-      sPriceChangeHistory: sPriceChangeHistory,
-    };
-  },
-  computed: {
-    buttonClass() {
-      return "btn btn-sm";
+  components: { createPriceChange, selectBranches, PriceChangeHistory, OutgoingPriceChange },
+ 
+    mounted() {
+        console.log("sPriceChangeHistory", sPriceChangeHistory);
     },
-    productsInfor() {
-      return this.$store.state.productsInfor;
+    
+    data() {
+        return {
+            BSClassCombos: BSClassCombos,
+            searchTerm: "",
+            showChangedPriceTable: false,
+            enableStatus: "disabled",
+            formData: {
+                newProductName: "",
+            },
+            showChangePriceModal: false,
+            searchStart: false,
+            clickedProduct: {},
+            changedPricesObj: {},
+            sPriceChangeHistory: sPriceChangeHistory,
+            tab: 1,
+        };
     },
-  },
-  methods: {
-    showOrCloseModal(id, state) {
-      $(`#${id}`).modal(`${state}`);
-    },
-    pickSelectedProduct(product) {
-      this.clickedProduct = product;
-      console.log("this.clickedProduct:", this.clickedProduct);
-    },
-    formatMoney(amount) {
-      return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
-    },
-    async sendProductSearch() {
-      console.log("Hello", process.env.NUXT_ENV_SEARCH_PRODUCT_API);
-      if (this.searchTerm.length >= 1) {
-        try {
-          let response = await this.$axios.get(
-            this.$store.state.urlBase +
-              process.env.NUXT_ENV_SEARCH_PRODUCT_API +
-              this.searchTerm
-          );
 
-          let resList = response.data.data;
-          console.log("🚀 ~ resList:", resList);
-          // console.log(response.data.data);
-          this.$store.commit("setProducts", resList);
-
-          this.searchDone = true;
-          this.searchStart = true;
-        } catch (error) {
-          this.error = error.message;
-        }
-      }
+    computed: {
+        buttonClass() {
+            return "btn btn-sm";
+        },
+        productsInfor() {
+            return this.$store.state.productsInfor;
+        },
     },
-  },
+    methods: {
+        logSomefin1(){
+          console.log("🚀 ~ logSomefin ~ logSomefin:")
+        },
+        pickSelectedProduct(product) {
+            this.clickedProduct = product;
+            console.log("this.clickedProduct:", this.clickedProduct);
+        },
+        formatMoney(amount) {
+            return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+        },
+        async sendProductSearch() {
+            console.log("Hello", process.env.NUXT_ENV_SEARCH_PRODUCT_API);
+            if (this.searchTerm.length >= 1) {
+                try {
+                    let response = await this.$axios.get(this.$store.state.urlBase +
+                        process.env.NUXT_ENV_SEARCH_PRODUCT_API +
+                        this.searchTerm);
+                    let resList = response.data.data;
+                    console.log("🚀 ~ resList:", resList);
+                    // console.log(response.data.data);
+                    this.$store.commit("setProducts", resList);
+                    this.searchDone = true;
+                    this.searchStart = true;
+                }
+                catch (error) {
+                    this.error = error.message;
+                }
+            }
+        },
+    },
+
 };
 </script>

@@ -84,6 +84,36 @@
           </li>
           <li>
             <nuxt-link
+              to="/staff"
+              :class="{
+                'nav-link': true,
+                // active: role.address === selectedRoleAddress,
+              }"
+            >
+              <div class="role-wrapper">
+                <i class="bi bi-people"></i>
+                <span class="iconName">Staff</span>
+              </div>
+              <span class="tooltip"> Staff </span>
+            </nuxt-link>
+          </li>
+          <li>
+            <nuxt-link
+              to="/transfers"
+              :class="{
+                'nav-link': true,
+                // active: role.address === selectedRoleAddress,
+              }"
+            >
+              <div class="role-wrapper">
+                <i class="bi bi-send"></i>
+                <span class="iconName">Transfers</span>
+              </div>
+              <span class="tooltip"> Transfers </span>
+            </nuxt-link>
+          </li>
+          <li>
+            <nuxt-link
               to="/expenses"
               :class="{
                 'nav-link': true,
@@ -325,71 +355,7 @@ export default {
       // },
     },
 
-    getRoleIconClass(roleName) {
-      switch (roleName) {
-        case "Sales":
-          return "bx bx-cart";
-        case "Credits":
-          return "bx bx-credit-card";
-        case "Refills":
-          return "bx bx-group";
-        case "Requests":
-          return "bx bx-analyse";
-        case "Purchases":
-          return "bx bx-purchase-tag";
-        case "Customer Returns":
-          return "bx bx-arrow-to-left";
-        case "Reports":
-          return "bx bx-detail";
-        case "Payment":
-          return "bx bx-wallet";
-        case "Expenses":
-          return "bx bx-pie-chart-alt-2";
-        case "Inventory":
-          return "bx bx-box";
-        case "Transaction History":
-          return "bx bx-history";
-        case "Users":
-          return "bx bx-user-circle";
-        case "Expiries":
-          return "bx bx-spreadsheet";
-        case "Expiry Report":
-          return "bx bx-spreadsheet";
-        case "Insurance":
-          return "bx bx-shield-plus";
-        case "Purchase Returns":
-          return "bx bx-caret-left-square";
-        case "Saved Sales":
-          return "bx bx-cart-download";
-        case "Stock Taking":
-          return "bx bx-package";
-        case "Damages":
-          return "bx bx-message-square-error";
-        case "WholeSale":
-          return "bx bx-cart-add";
-        case "Input":
-          return "bx bx-list-minus";
-        case "Outputpage":
-          return "bx bx-list-plus";
-        case "Producthistory":
-          return "bx bx-timer";
-        case "Customers":
-          return "bx bx-user-circle";
-        case "Settings":
-          return "bx bx-cube-alt";
-        case "TopSelling":
-          return "bx bx-arrow-to-top";
-        case "Cashier":
-          return "bx bx-briefcase";
-        case "Save Invoice":
-          return "bx bx-book-add";
-        case "Savecart":
-          return "bx bx-book-add";
-        default:
-          return "bx bxs-reset";
-      }
-    },
-
+   
     scrollToListItem() {
       const listItems = this.$refs.listItem;
       if (listItems && listItems.length > 0) {
@@ -473,9 +439,10 @@ export default {
   border-radius: 10px;
 }
 .card2 {
-  background-color: #fff;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  /* background-color: #fff; */
+  /* box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px; */
+  border: 1px solid rgba(60, 64, 67, 0.3);
   padding: 8px 15px;
   border-radius: 10px;
 }
@@ -486,6 +453,7 @@ export default {
   margin-right: 0.8rem;
   z-index: 1;
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -533,8 +501,9 @@ body {
   left: 0;
   height: 100vh;
   width: 70px;
-  background-color: #fff;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: transparent;
+  border: 1px solid rgba(60, 64, 67, 0.3);
+  /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
   padding: 0.4rem;
   transition: all 0.5s ease;
   display: flex;

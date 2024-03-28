@@ -292,9 +292,6 @@ export default {
   overflow-x: hidden;
 }
 
-.gridItem3 {
-}
-
 .gridItem {
   grid-row: span 1;
   grid-column: span 1;
@@ -303,7 +300,6 @@ export default {
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
-
 .chartSection {
   background: #fff;
   border-radius: 10px;

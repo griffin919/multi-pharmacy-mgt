@@ -3,7 +3,6 @@ import {
   ValidationProvider,
   ValidationObserver,
   extend,
-  localize,
 } from "vee-validate";
 import {
   required,
@@ -56,10 +55,10 @@ extend("numeric", {
 
 extend("alpha_spaces", {
   ...alpha_spaces,
-  message: "The {_field_} should contain only numbers.",
+  message: "The {_field_} should contain only letters and spaces.",
 });
 
 extend("regex", {
   ...regex,
-  message: "regex",
+  message: "The {_field_} format is invalid.",
 });

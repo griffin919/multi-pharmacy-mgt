@@ -8,6 +8,9 @@ export default {
     htmlAttrs: {
       lang: "en",
     },
+    script: [
+      { src: '/jquery-3.6.0.min.js' }
+    ],
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -25,7 +28,9 @@ export default {
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    { src: './static/jquery-3.6.0.min.js', ssr: false }
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,

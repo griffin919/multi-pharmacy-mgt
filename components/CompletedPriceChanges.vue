@@ -1,7 +1,9 @@
 <template>
   <div class="">
-    <div class="w-90 changedPricesTable d-flex">
-      <label>Completed Price Changes </label>
+    <div class="w-90 changedPricesTable d-flexw-90 changedPricesTable d-flex">
+      <span>
+        <label>Completed Price Changes </label>
+      </span>
       <span>
         <table class="tabCon table mt-2">
           <thead>
@@ -170,18 +172,14 @@
 </template>
 
 <style scoped>
-table td {
-  padding: 0.4rem !important;
-  text-align: center;
-  vertical-align: middle;
-}
-
 table th {
-  padding: 0.6rem !important;
+  padding: 0.2rem !important;
   text-align: center;
+  font-size: small;
   vertical-align: middle;
   position: sticky;
 }
+
 .changedPricesTable {
   background-color: #fff;
   flex-direction: column;
@@ -196,6 +194,44 @@ table th {
   /* color: hsl(264, 39%, 51%); */
   font-weight: 600;
   /* text-align: center; */
+}
+
+.table-container {
+  margin: 20px;
+}
+
+/* Style the table header */
+.table thead th {
+  background-color: #8e44ad;
+  color: #fff;
+  padding: 10px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+/* Style the table rows */
+.table tbody tr {
+  border: 1px solid #ddd;
+}
+
+/* Alternate row colors for better readability */
+.table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Style the cells */
+.table td {
+  padding: 10px;
+}
+
+/* Style the "Change" button */
+.table button {
+  font-size: 0.8rem;
+  color: #fff;
+  background-color: hsl(264, 39%, 51%);
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
 }
 </style>
 

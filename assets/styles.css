@@ -1,5 +1,6 @@
 body {
-  background-color: #eeebeb;
+  /* background-color: #eeebeb; */
+  background-color: #fff;
 }
 
 /* ====== styling for root divs in template ===*/
@@ -26,6 +27,7 @@ body {
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
+
 .flatCard2 {
   background-color: #eeebeb;
   width: 40%;
@@ -41,16 +43,19 @@ body {
   justify-content: space-between;
   align-items: center;
 }
+
 .flexCenterCenter {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .flexStartCenter {
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
+
 .flexEndCenter {
   display: flex;
   justify-content: flex-end;
@@ -61,18 +66,15 @@ table {
   border-collapse: collapse; /* make the table borders collapse to each other */
   width: 100%;
 }
-th,
-td {
+
+table th,
+table td {
   padding: 10px 16px;
   vertical-align: middle;
-  font-size: 0.6rem;
-  /* text-align: center; */
-  /* border: 1px solid #ccc; */
-}
 
-td {
-  vertical-align: middle;
-  /* font-size: 11px; */
+  font-size: 0.7rem;
+  padding: 0.3rem !important;
+  vertical-align: middle !important;
 }
 
 thead th {
@@ -80,7 +82,7 @@ thead th {
   color: hsl(264, 39%, 51%);
   position: sticky; /* make the table heads sticky */
   top: 0px; /* table head will be placed from the top of the table and sticks to it */
-  vertical-align: middle;
+  vertical-align: middle !important;
 }
 
 button {

@@ -434,3 +434,37 @@ export const chartSampleData = [
     borderColor: "#f0d568",
   },
 ];
+
+export const branches = [
+  {
+    id: 1,
+    name: "Main Street Pharmacy",
+    location: "123 Main Street, City",
+    manager: "John Doe",
+  },
+  {
+    id: 2,
+    name: "City Street Pharmacy",
+    location: "456 City Street, Town",
+    manager: "Jane Smith",
+  },
+  {
+    id: 3,
+    name: "Suburban Drugs",
+    location: "789 Suburban Avenue, Suburb",
+    manager: "Alex Johnson",
+  },
+  {
+    id: 4,
+    name: "HealthHub Pharmacy",
+    location: "10 HealthHub Road, City",
+    manager: "Emily Brown",
+  },
+  {
+    id: 5,
+    name: "Wellness Pharmacy",
+    location: "15 Wellness Street, Town",
+    manager: "Chris Wilson",
+  },
+  // Add more pharmacies as needed
+];
